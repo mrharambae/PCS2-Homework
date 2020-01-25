@@ -1,0 +1,312 @@
+import os
+os.getcwd()
+os.chdir('C:\\Users\\mr.harambae\\Downloads')
+
+#####FIBO
+def fib(n):
+    if n==0:
+        return(0)
+    elif n==1:
+        return(1)
+    else:
+        return(fib(n-1)+fib(n-2))
+print(fib(n))
+
+#-------------------------------------------------------#
+
+####INS
+def ins(x):
+    z=0    
+    for i in range(1,len(x)):
+        y=x[i]
+        for j in range(i):
+            if j>=0 and x[j]>y:
+                (x[i],x[j])=(x[j],x[i])
+                z+=1
+    print(z)
+arr = list(map(int, input().rstrip().split()))
+print(insertionsort(arr))
+
+#------------------------------------------------------#
+
+#####MAJ
+def maj(x):
+    lst = []
+    none = -1
+    for i in x:
+        if x.count(i)>len(x)/2:
+            lst.append(i)
+            if len(lst)>0:
+                return(lst)
+    if len(lst)==0:
+        return(none)
+
+f=open('rosalind_maj.txt')
+text=f.read().rstrip().split('\n')
+f.close()
+kn=text[0].rstrip().split()
+k=int(kn[0])
+n=int(kn[1])
+d=''.join(map(str,text[1:]))
+f=list(map(int,d.strip().split()))
+
+def sublist(lsts,n):
+    sub=[]
+    result=[]
+    for j in lsts:
+        sub.append(j)
+        if len(sub)==n:
+            result.append(sub)
+            sub=[]
+    if sub:
+        result.append(sub)
+    return(result)
+z=sublist(f,n)
+lsts=[]
+for x in z:
+    m=maj(x)
+    lsts.append(m)
+print(*lsts)
+
+#----------------------------------------------#
+
+#####MER
+def merge(L, R):
+    sortedlist = []
+    i = 0
+    j = 0
+    while i < len(L) and j < len(R):
+        if L[i] < R[j]:
+            sortedlist.append(L[i])
+            i+=1
+        else:
+            sortedlist.append(R[j])
+            j+=1
+    sortedlist+=L[i:]
+    sortedlist+=R[j:]
+    return(sortedlist)
+L = list(map(int, input().rstrip().split()))
+R = list(map(int, input().rstrip().split()))
+print(*merge(L,R))
+
+#-------------------------------------------------#
+
+#####2SUM
+def summ(x):
+    pos = []
+    lst = []
+    for i in x:
+        if i<0:
+            if abs(i) in x:
+                lst.append(i)
+                lst.append(abs(i))
+                break
+    for z, e in enumerate(x):
+        if e==0:
+            if x.count(e)>=2:
+                pos.append(z)
+                if len(pos)>2:
+                    pos = pos[:2]
+    for j in lst:
+        pos.append(int(x.index(j)))
+    if len(pos)>2:
+        pos = pos[2:]
+    s = sorted([y+1 for y in pos])
+    print(((' '.join(map(str, s)))or-1), sep='\n')
+
+f=open('rosalind_2sum.txt')
+text=f.read().rstrip().split('\n')
+f.close()
+kn=text[0].rstrip().split()
+k=int(kn[0])
+n=int(kn[1])
+d=' '.join(map(str,text[1:]))
+f=list(map(int,d.strip().split()))
+
+def sublist(lsts,n):
+    sub=[]
+    result=[]
+    for l in lsts:
+        sub.append(l)
+        if len(sub)==n:
+            result.append(sub)
+            sub=[]
+    if sub:
+        result.append(sub)
+    return(result)
+z=sublist(f,n)
+lsts=[]
+for x in z:
+    m=summ(x)
+    lsts.append(m)
+print(*lsts)
+
+#--------------------------------------------------#
+
+#####BINS
+def bins(one,two):
+    lst = []
+    for i in two:
+        if i in one:
+            lst.append(one.index(i)+1)
+        elif i not in one:
+            lst.append(-1)
+    print(*lst)
+one = list(map(int,input().split()))
+two = list(map(int,input().split()))
+print(bins(one,two))
+
+#---------------------------------------------------#
+
+#####MS
+def ms(x):
+    if len(x) == 1:
+        return(x)
+    else:
+        L = x[:len(x)//2]
+        R = x[len(x)//2:]
+        L = ms(L)
+        R = ms(R)
+        sortedlist = []
+        i = 0
+        j = 0
+        while i < len(L) and j < len(R):
+            if L[i] < R[j]:
+                sortedlist.append(L[i])
+                i+=1
+            else:
+                sortedlist.append(R[j])
+                j+=1
+        sortedlist+=L[i:]
+        sortedlist+=R[j:]
+    return(sortedlist)
+x = list(map(int, input().rstrip().split()))
+print(*ms(x))
+
+#---------------------------------------------------#
+
+#####PAR
+def par(n):
+    smaller = []
+    mid = []
+    bigger = []
+    prime = n[0]
+    for i in n:
+        if i < prime:
+            smaller.append(i)
+        if i == prime:
+            mid.append(i)
+        if i > prime:
+            bigger.append(i)
+    print(*(smaller+mid+bigger))
+n = list(map(int, input().rstrip().split()))
+print(par(n))
+
+#-------------------------------------------------------#
+
+#####3SUM
+def summm(i):
+    lst = []
+    si = sorted(i)
+    for l in range(len(i)-2):
+        a = si[l]
+        m = l+1
+        n = len(i)-1
+        while m < n:
+            b = si[m]
+            c = si[n]
+            if a+b+c == 0:
+                lst.append(i.index(a)+1)
+                lst.append(i.index(b)+1)
+                lst.append(i.index(c)+1)
+                return(sorted(lst))
+            elif a+b+c > 0:
+                n-=1
+            elif a+b+c < 0:
+                m+=1
+    return(-1)
+
+f=open('rosalind_3sum.txt')
+text=f.read().rstrip().split('\n')
+f.close()
+kn=text[0].rstrip().split()
+k=int(kn[0])
+n=int(kn[1])
+d=' '.join(map(str,text[1:]))
+f=list(map(int,d.strip().split()))
+
+def sublist(lsts,n):
+    sub=[]
+    result=[]
+    for l in lsts:
+        sub.append(l)
+        if len(sub)==n:
+            result.append(sub)
+            sub=[]
+    if sub:
+        result.append(sub)
+    return(result)
+t=sublist(f,n)
+lsts=[]
+for i in t:
+    m=summm(i)
+    lsts.append(m)
+print((*lsts),sep='\n')
+
+#------------------------------------------------------#
+
+#####INV
+def inv(x):
+    if len(x) == 1:
+	return(x, 0)
+    else:
+	L = x[:len(x)//2]
+	R = x[len(x)//2:]
+	L, Li = mergeSortInversions(L)
+	R, Ri = mergeSortInversions(R)
+	sortedlist = []
+	i = 0
+	j = 0 
+	inversions = 0 + Li + Ri
+    while i < len(L) and j < len(R):
+	if L[i] <= R[j]:
+	    sortedlist.append(L[i])
+	    i += 1
+	else:
+	    sortedlist.append(R[j])     
+	    j += 1
+	    inversions += (len(L)-i)
+    sortedlist += L[i:]
+    sortedlist += R[j:]
+    return(sortedlist, inversions)
+x = list(map(int, input().rstrip().split()))
+print(*inv(x))
+
+#-----------------------------------------------------------------#
+
+#####PAR3
+def parrr(n):
+    smaller = []
+    mid = []
+    bigger = []
+    prime = n[0]
+    for i in n:
+        if i < prime:
+            smaller.append(i)
+        if i == prime:
+            mid.append(i)
+        if i > prime:
+            bigger.append(i)
+    print(*(smaller+mid+bigger))
+n = list(map(int, input().rstrip().split()))
+print(parrr(n))
+
+#---------------------------------------------------------------------#
+
+#####MED
+def med(x, y):
+    xs = sorted(x)
+    return(xs[y-1])
+x = list(map(int, input().rstrip().split()))
+y = int(input())
+print(med(x,y))
